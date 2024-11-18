@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from firstApp.models import Employee
 
 # Create your views here.
 def employeeView(request):
@@ -8,5 +9,8 @@ def employeeView(request):
         'name':'John',
         'salary':50000
     }
-    
-    return JsonResponse(emp)
+
+    data = Employee.objects.all();
+    response = {'employees': list(data.values('name','salary'))}
+
+    return JsonResponse(response)
